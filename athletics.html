@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Athletics | Marc Brougher</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --gold: #C9A84C;
+      --gold-light: #E8C96A;
+      --navy: #0B1F3A;
+      --navy-mid: #152d4f;
+      --cream: #F5F0E8;
+      --text: #1a1a1a;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'DM Sans', sans-serif; background: var(--cream); color: var(--text); }
+
+    nav {
+      position: fixed; top: 0; width: 100%; z-index: 100;
+      background: rgba(11,31,58,0.97);
+      backdrop-filter: blur(10px);
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 0 5%; height: 64px;
+      border-bottom: 1px solid rgba(201,168,76,0.3);
+    }
+    .nav-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.3rem; color: var(--gold); font-weight: 700; text-decoration: none;
+    }
+    .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+    .nav-links a {
+      color: rgba(255,255,255,0.85); text-decoration: none;
+      font-size: 0.9rem; font-weight: 500;
+      letter-spacing: 0.06em; text-transform: uppercase; transition: color 0.2s;
+    }
+    .nav-links a:hover, .nav-links a.active { color: var(--gold); }
+
+    /* HERO */
+    .ath-hero {
+      background: var(--navy);
+      padding: 9rem 10% 5rem;
+      position: relative; overflow: hidden;
+    }
+    .ath-hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse at 70% 50%, rgba(201,168,76,0.07), transparent 65%);
+    }
+    .ath-hero::after {
+      content: '';
+      position: absolute; bottom: 0; left: 0; right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--gold) 0%, transparent 60%);
+    }
+    .ath-hero-inner { position: relative; z-index: 1; }
+    .eyebrow {
+      font-size: 0.75rem; letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--gold); margin-bottom: 0.8rem; font-weight: 500;
+    }
+    .ath-hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.5rem, 5vw, 4.5rem);
+      color: white; font-weight: 900; line-height: 1.1; margin-bottom: 1rem;
+    }
+    .ath-hero .subtitle {
+      color: rgba(255,255,255,0.55); font-size: 1rem;
+      max-width: 520px; line-height: 1.7;
+    }
+
+    /* STAT STRIP */
+    .stat-strip {
+      background: var(--gold);
+      padding: 2.5rem 10%;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 2rem;
+    }
+    .stat-block { text-align: center; }
+    .stat-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.4rem; font-weight: 900; color: var(--navy);
+      line-height: 1;
+    }
+    .stat-desc {
+      font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.1em;
+      color: rgba(11,31,58,0.7); margin-top: 0.3rem; font-weight: 500;
+    }
+
+    /* SECTIONS */
+    section { padding: 5rem 10%; }
+    .section-label {
+      font-size: 0.75rem; letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--gold); margin-bottom: 0.8rem; font-weight: 500;
+    }
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+      color: var(--navy); margin-bottom: 2rem; line-height: 1.2;
+    }
+
+    /* STORY */
+    .story { background: white; }
+    .story-text p {
+      font-size: 1.0rem; line-height: 1.85; color: #333;
+      margin-bottom: 1.4rem; max-width: 780px;
+    }
+    .story-text p strong { color: var(--navy); }
+
+    blockquote {
+      border-left: 4px solid var(--gold);
+      padding: 1.2rem 1.8rem;
+      margin: 2rem 0;
+      background: var(--cream);
+      font-style: italic;
+      font-size: 1.0rem;
+      line-height: 1.75;
+      color: #444;
+      max-width: 780px;
+    }
+    blockquote cite {
+      display: block; margin-top: 0.8rem;
+      font-style: normal; font-size: 0.8rem;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      color: var(--gold); font-weight: 500;
+    }
+
+    /* AWARDS */
+    .awards { background: var(--cream); }
+    .awards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+    }
+    .award-card {
+      background: white;
+      padding: 1.8rem;
+      border-top: 3px solid var(--gold);
+    }
+    .award-icon {
+      font-size: 2rem; margin-bottom: 0.8rem;
+    }
+    .award-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.1rem; color: var(--navy); font-weight: 700;
+      margin-bottom: 0.6rem;
+    }
+    .award-desc {
+      font-size: 0.87rem; color: #555; line-height: 1.7;
+    }
+    .award-badge {
+      display: inline-block;
+      margin-top: 1rem;
+      font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase;
+      padding: 0.25rem 0.7rem;
+      background: var(--cream);
+      color: var(--navy); font-weight: 600;
+      border-radius: 2px;
+    }
+
+    /* PROFESSIONAL */
+    .pro { background: var(--navy); }
+    .pro .section-title { color: white; }
+    .pro .section-label { color: var(--gold); }
+    .pro-text p {
+      font-size: 1.0rem; line-height: 1.85;
+      color: rgba(255,255,255,0.7); margin-bottom: 1.4rem; max-width: 780px;
+    }
+    .pro-text p strong { color: white; }
+
+    /* LEADERSHIP */
+    .leadership { background: white; }
+    .lead-list { list-style: none; max-width: 780px; }
+    .lead-list li {
+      padding: 1.2rem 0;
+      border-bottom: 1px solid #f0ece4;
+      display: flex; gap: 1.2rem; align-items: flex-start;
+    }
+    .lead-bullet {
+      width: 8px; height: 8px;
+      background: var(--gold);
+      border-radius: 50%;
+      margin-top: 0.5rem;
+      flex-shrink: 0;
+    }
+    .lead-text strong { font-size: 0.95rem; color: var(--navy); display: block; margin-bottom: 0.3rem; }
+    .lead-text span { font-size: 0.88rem; color: #555; line-height: 1.6; }
+
+    footer {
+      background: #060f1c; text-align: center;
+      padding: 1.5rem; font-size: 0.8rem;
+      color: rgba(255,255,255,0.25);
+    }
+
+    @media (max-width: 768px) {
+      nav { padding: 0 5%; }
+      .nav-links { gap: 1.2rem; }
+      section { padding: 4rem 6%; }
+      .stat-strip { padding: 2rem 6%; }
+      .ath-hero { padding: 8rem 6% 4rem; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">MB</a>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="projects.html">Projects</a></li>
+    <li><a href="athletics.html" class="active">Athletics</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<div class="ath-hero">
+  <div class="ath-hero-inner">
+    <p class="eyebrow">UC Berkeley · Cal Bears Soccer</p>
+    <h1>Athletics</h1>
+    <p class="subtitle">Division I goalkeeper. Academic All-American. Competing and excelling at the highest level — in the classroom and on the pitch.</p>
+  </div>
+</div>
+
+<!-- STAT STRIP -->
+<div class="stat-strip">
+  <div class="stat-block">
+    <p class="stat-num">18</p>
+    <p class="stat-desc">Games Played</p>
+  </div>
+  <div class="stat-block">
+    <p class="stat-num">61</p>
+    <p class="stat-desc">Saves (Season)</p>
+  </div>
+  <div class="stat-block">
+    <p class="stat-num">5</p>
+    <p class="stat-desc">Shutouts</p>
+  </div>
+  <div class="stat-block">
+    <p class="stat-num">.735</p>
+    <p class="stat-desc">Save %</p>
+  </div>
+  <div class="stat-block">
+    <p class="stat-num">1,503</p>
+    <p class="stat-desc">Minutes Played</p>
+  </div>
+  <div class="stat-block">
+    <p class="stat-num">3.686</p>
+    <p class="stat-desc">Cumulative GPA</p>
+  </div>
+</div>
+
+<!-- STORY -->
+<section class="story">
+  <p class="section-label">The Story</p>
+  <h2 class="section-title">Goalkeeper. Captain. Scholar.</h2>
+  <div class="story-text">
+    <p>
+      I came to UC Berkeley as a recruited Division I goalkeeper and spent four years proving that elite athletics and elite academics are not mutually exclusive. Balancing a rigorous Mechanical Engineering curriculum — often 18+ units per semester — with a full D1 training schedule required the kind of time management, mental toughness, and discipline that no classroom can teach on its own.
+    </p>
+    <p>
+      In my breakout season as the full-time starter, I played every minute of 17 games and <strong>ranked second at Cal in minutes played (1,503)</strong>. On a statistical level, I finished <strong>second in saves (61), third in save percentage (.735)</strong>, and fifth in shutouts in the entire 15-team ACC. Two moments defined that season: a career-high seven-save shutout in a road upset of then-No. 1 Pitt, and a five-save clean sheet at then-No. 2 Duke in the ACC Tournament quarterfinals.
+    </p>
+
+    <blockquote>
+      "A star in the classroom and on the field, Brougher had a breakout season in his first full year as the starter in goal… one of his shutouts came during the regular season in Cal's 1-0 upset at then-No. 1 Pitt, with Brougher making a career-high seven saves to safeguard the victory… that earned Brougher the ACC Defensive Player of the Week award and a spot on the Top Drawer Soccer Team of the Week."
+      <cite>— Cal Athletics</cite>
+    </blockquote>
+
+    <p>
+      Beyond my own play, I served as <strong>team captain</strong> and as a student-athlete representative on the <strong>ACC Men's Soccer Student Athlete Advisory Committee (SAAC)</strong>, advocating for student-athletes across the conference. I also co-founded the <strong>Berkeley Engineering Athlete Network</strong>, a mentorship club connecting student-athletes in engineering with industry and alumni resources.
+    </p>
+  </div>
+</section>
+
+<!-- AWARDS -->
+<section class="awards">
+  <p class="section-label">Recognition</p>
+  <h2 class="section-title">Academic & Athletic Awards</h2>
+  <div class="awards-grid">
+
+    <div class="award-card">
+      <div class="award-icon">🏆</div>
+      <p class="award-name">Academic All-American — 2nd Team</p>
+      <p class="award-desc">Awarded by the College Sports Communicators to student-athletes with a minimum 3.50 GPA who compete in at least 90% of games or start 66%. Only <strong>0.4% of all NCAA men's soccer players</strong> receive this honor.</p>
+      <span class="award-badge">Top 0.4% NCAA Soccer</span>
+    </div>
+
+    <div class="award-card">
+      <div class="award-icon">🌎</div>
+      <p class="award-name">Academic All-District Team</p>
+      <p class="award-desc">Recognized by College Sports Communicators for combining elite on-field performance with a 3.50+ GPA. A regional honor preceding the All-American selection.</p>
+      <span class="award-badge">College Sports Communicators</span>
+    </div>
+
+    <div class="award-card">
+      <div class="award-icon">🎓</div>
+      <p class="award-name">ACC All-Academic Team — 2× Recipient</p>
+      <p class="award-desc">Requires a 3.0+ cumulative GPA and competing in at least 50% of the institution's games. Earned twice across my career in the Atlantic Coast Conference.</p>
+      <span class="award-badge">Atlantic Coast Conference</span>
+    </div>
+
+    <div class="award-card">
+      <div class="award-icon">📋</div>
+      <p class="award-name">Pac-12 Honor Roll (2024)</p>
+      <p class="award-desc">Awarded to student-athletes maintaining a 3.30+ cumulative GPA with at least two semesters completed while competing in the Pac-12 Conference.</p>
+      <span class="award-badge">Pac-12 Conference · 2024</span>
+    </div>
+
+    <div class="award-card">
+      <div class="award-icon">🐻</div>
+      <p class="award-name">Cal Athletics Honorific Scholarship</p>
+      <p class="award-desc">Issued by the Cal Athletics Fund in recognition of academic excellence and athletic achievement. Received in both 2024 and 2025.</p>
+      <span class="award-badge">2024 & 2025</span>
+    </div>
+
+    <div class="award-card">
+      <div class="award-icon">⚡</div>
+      <p class="award-name">ACC Defensive Player of the Week</p>
+      <p class="award-desc">Earned after a career-high seven-save performance in Cal's 1-0 road upset of then-No. 1 Pitt. Also earned Top Drawer Soccer Team of the Week recognition twice that season.</p>
+      <span class="award-badge">ACC · 2024 Season</span>
+    </div>
+
+    <div class="award-card">
+      <div class="award-icon">🏅</div>
+      <p class="award-name">Big C Society — 3× Member</p>
+      <p class="award-desc">A prestigious society at UC Berkeley recognizing student-athletes who have demonstrated both athletic achievement and academic excellence for three or more years.</p>
+      <span class="award-badge">3 Years</span>
+    </div>
+
+  </div>
+</section>
+
+<!-- PRO CAREER NOTE -->
+<section class="pro">
+  <p class="section-label">Professional Path</p>
+  <h2 class="section-title">Turning the Page</h2>
+  <div class="pro-text">
+    <p>
+      My performance at Cal drew professional interest. I participated in trials with <strong>MLS clubs</strong> and received professional contract offers from other organizations. After careful consideration, I made the deliberate decision to <strong>retire from competitive soccer</strong> at the conclusion of my college career.
+    </p>
+    <p>
+      The discipline, resilience, and competitive drive that made me a D1 goalkeeper don't disappear — they transfer. I'm channeling everything that sports built in me into engineering: the same preparation, the same high standards, and the same relentlessness that I brought to every match. The game is different. The mindset isn't.
+    </p>
+    <p>
+      I'm now focused entirely on building a career at the intersection of mechanical engineering, embedded systems, and intelligent design — and I'm approaching that with the same intensity I brought to every game.
+    </p>
+  </div>
+</section>
+
+<!-- LEADERSHIP -->
+<section class="leadership">
+  <p class="section-label">Leadership & Service</p>
+  <h2 class="section-title">Beyond the Game</h2>
+  <ul class="lead-list">
+    <li>
+      <div class="lead-bullet"></div>
+      <div class="lead-text">
+        <strong>Team Captain — Cal Bears Men's Soccer</strong>
+        <span>Elected by teammates to lead the squad. Responsible for setting tone in training, communicating standards, and representing the team in athletic department decisions.</span>
+      </div>
+    </li>
+    <li>
+      <div class="lead-bullet"></div>
+      <div class="lead-text">
+        <strong>ACC Men's Soccer SAAC Representative</strong>
+        <span>Served as a student-athlete advisor representing Cal on the Atlantic Coast Conference Student-Athlete Advisory Committee — advocating for the needs and well-being of student-athletes conference-wide.</span>
+      </div>
+    </li>
+    <li>
+      <div class="lead-bullet"></div>
+      <div class="lead-text">
+        <strong>Co-Founder — Berkeley Engineering Athlete Network</strong>
+        <span>Created a mentorship club specifically for student-athletes in engineering at UC Berkeley, connecting them with alumni, industry professionals, and academic resources to help them navigate both worlds.</span>
+      </div>
+    </li>
+  </ul>
+</section>
+
+<footer>
+  © 2026 Marc Brougher · UC Berkeley
+</footer>
+
+</body>
+</html>

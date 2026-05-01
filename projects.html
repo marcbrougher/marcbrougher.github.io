@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Projects | Marc Brougher</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --gold: #C9A84C;
+      --gold-light: #E8C96A;
+      --navy: #0B1F3A;
+      --navy-mid: #152d4f;
+      --cream: #F5F0E8;
+      --text: #1a1a1a;
+      --muted: #666;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--cream);
+      color: var(--text);
+    }
+
+    nav {
+      position: fixed; top: 0; width: 100%; z-index: 100;
+      background: rgba(11,31,58,0.97);
+      backdrop-filter: blur(10px);
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 0 5%;
+      height: 64px;
+      border-bottom: 1px solid rgba(201,168,76,0.3);
+    }
+    .nav-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.3rem;
+      color: var(--gold);
+      font-weight: 700;
+      text-decoration: none;
+    }
+    .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+    .nav-links a {
+      color: rgba(255,255,255,0.85);
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover, .nav-links a.active { color: var(--gold); }
+
+    /* PAGE HEADER */
+    .page-header {
+      background: var(--navy);
+      padding: 9rem 10% 5rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .page-header::after {
+      content: '';
+      position: absolute; bottom: 0; left: 0; right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--gold) 0%, transparent 60%);
+    }
+    .page-header .eyebrow {
+      font-size: 0.75rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 0.8rem;
+      font-weight: 500;
+    }
+    .page-header h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.5rem, 5vw, 4.5rem);
+      color: white;
+      font-weight: 900;
+      line-height: 1.1;
+    }
+    .page-header p {
+      color: rgba(255,255,255,0.55);
+      font-size: 1rem;
+      margin-top: 1rem;
+      max-width: 500px;
+      line-height: 1.7;
+    }
+
+    /* PROJECTS */
+    .projects-section {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 5rem 5%;
+    }
+
+    .project-item {
+      background: white;
+      margin-bottom: 1rem;
+      border-left: 4px solid transparent;
+      transition: border-color 0.2s;
+    }
+    .project-item.open {
+      border-left-color: var(--gold);
+    }
+
+    .project-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.6rem 2rem;
+      cursor: pointer;
+      user-select: none;
+    }
+    .project-header:hover .project-title { color: var(--gold); }
+
+    .project-meta { flex: 1; }
+    .project-tag {
+      font-size: 0.7rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 0.3rem;
+      font-weight: 500;
+    }
+    .project-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.25rem;
+      color: var(--navy);
+      font-weight: 700;
+      transition: color 0.2s;
+    }
+
+    .project-chevron {
+      width: 28px; height: 28px;
+      border: 2px solid #ddd;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      transition: all 0.3s;
+      flex-shrink: 0;
+      margin-left: 1rem;
+    }
+    .project-item.open .project-chevron {
+      border-color: var(--gold);
+      background: var(--gold);
+      transform: rotate(180deg);
+    }
+    .project-chevron svg { transition: fill 0.3s; }
+    .project-item.open .project-chevron svg path { stroke: var(--navy); }
+
+    .project-body {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.45s ease;
+    }
+    .project-body-inner {
+      padding: 0 2rem 2rem;
+      border-top: 1px solid #f0ece4;
+    }
+
+    .project-description {
+      font-size: 0.95rem;
+      line-height: 1.8;
+      color: #444;
+      margin-bottom: 1.5rem;
+      margin-top: 1.2rem;
+    }
+
+    /* Media grid placeholder */
+    .media-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 0.75rem;
+      margin-top: 1rem;
+    }
+    .media-slot {
+      aspect-ratio: 16/10;
+      background: var(--cream);
+      border: 2px dashed #ccc;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      font-size: 0.75rem;
+      color: #aaa;
+      text-align: center;
+      padding: 1rem;
+      gap: 0.5rem;
+    }
+    .media-slot svg { opacity: 0.4; }
+
+    /* Actual uploaded media */
+    .media-grid img,
+    .media-grid video {
+      width: 100%;
+      aspect-ratio: 16/10;
+      object-fit: cover;
+      display: block;
+    }
+
+    .tech-pills { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1.2rem; }
+    .tech-pill {
+      font-size: 0.75rem;
+      padding: 0.3rem 0.8rem;
+      background: var(--cream);
+      color: var(--navy);
+      font-weight: 500;
+      border-radius: 2px;
+    }
+
+    footer {
+      background: #060f1c;
+      text-align: center;
+      padding: 1.5rem;
+      font-size: 0.8rem;
+      color: rgba(255,255,255,0.25);
+    }
+
+    @media (max-width: 768px) {
+      nav { padding: 0 5%; }
+      .nav-links { gap: 1.2rem; }
+      .page-header { padding: 8rem 6% 4rem; }
+      .projects-section { padding: 3rem 4%; }
+      .project-header { padding: 1.2rem 1.2rem; }
+      .project-body-inner { padding: 0 1.2rem 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">MB</a>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="projects.html" class="active">Projects</a></li>
+    <li><a href="athletics.html">Athletics</a></li>
+  </ul>
+</nav>
+
+<div class="page-header">
+  <p class="eyebrow">Work I've Built</p>
+  <h1>Projects</h1>
+  <p>A selection of hands-on engineering builds — from mechatronics capstones to backyard go-karts.</p>
+</div>
+
+<div class="projects-section">
+
+  <!-- T-SHIRT FOLDER -->
+  <div class="project-item" id="proj-tshirt">
+    <div class="project-header" onclick="toggle('proj-tshirt')">
+      <div class="project-meta">
+        <p class="project-tag">Mechatronics · Capstone · 2025</p>
+        <p class="project-title">Automatic T-Shirt Folder</p>
+      </div>
+      <div class="project-chevron">
+        <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+          <path d="M2 4L6 8L10 4" stroke="#999" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </div>
+    </div>
+    <div class="project-body">
+      <div class="project-body-inner">
+        <p class="project-description">
+          Senior capstone project: a fully automated T-shirt folding machine built from scratch. The drivetrain uses a DC motor with a complete custom transmission, while a set of servo motors drives two-bar linkages that execute precise, repeatable folding motions. I implemented a PI (proportional-integral) control loop to regulate actuator behavior and significantly improve consistency across cycles — bringing fold accuracy from erratic to repeatable within tight tolerances. The project required integrating mechanical design, embedded control, and iterative physical testing.
+        </p>
+        <div class="tech-pills">
+          <span class="tech-pill">DC Motor + Transmission</span>
+          <span class="tech-pill">Servo Motors</span>
+          <span class="tech-pill">Two-Bar Linkage</span>
+          <span class="tech-pill">PI Control</span>
+          <span class="tech-pill">Embedded Systems</span>
+        </div>
+        <!-- ADD YOUR PHOTOS/VIDEOS BELOW. Replace each .media-slot div with an <img> or <video> tag. -->
+        <div class="media-grid" style="margin-top:1.5rem;">
+          <div class="media-slot">
+            <svg width="32" height="32" viewBox="0 0 32 32" fill="none"><rect x="2" y="6" width="28" height="20" rx="2" stroke="#aaa" stroke-width="2"/><circle cx="16" cy="16" r="5" stroke="#aaa" stroke-width="2"/></svg>
+            Replace with &lt;img src="photos/tshirt-1.jpg"&gt;
+          </div>
+          <div class="media-slot">
+            <svg width="32" height="32" viewBox="0 0 32 32" fill="none"><rect x="2" y="6" width="28" height="20" rx="2" stroke="#aaa" stroke-width="2"/><circle cx="16" cy="16" r="5" stroke="#aaa" stroke-width="2"/></svg>
+            Replace with &lt;img src="photos/tshirt-2.jpg"&gt;
+          </div>
+          <div class="media-slot">
+            <svg width="32" height="32" viewBox="0 0 32 32" fill="none"><polygon points="12,10 24,16 12,22" fill="#aaa"/><circle cx="16" cy="16" r="13" stroke="#aaa" stroke-width="2"/></svg>
+            Replace with &lt;video src="videos/tshirt.mp4" controls&gt;&lt;/video&gt;
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PYTHON / GENETIC ALGORITHM -->
+  <div class="project-item" id="proj-genetic">
+    <div class="project-header" onclick="toggle('proj-genetic')">
+      <div class="project-meta">
+        <p class="project-tag">Software · Simulation · 2025–2026</p>
+        <p class="project-title">Python Genetic Algorithm & Digital Twin Modeling</p>
+      </div>
+      <div class="project-chevron">
+        <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+          <path d="M2 4L6 8L10 4" stroke="#999" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </div>
+    </div>
+    <div class="project-body">
+      <div class="project-body-inner">
+        <p class="project-description">
+          A collection of 17 simulation projects spanning two domains: 9 that model manufacturing processes and 8 that model drone-based systems including LiDAR. Genetic algorithms were used to evolve and optimize parameters across generations, serving as an efficient alternative to exhaustive search in high-dimensional design spaces. The drone modeling projects include digital twins — virtual replicas that mirror real system behavior and allow safe, cost-effective parameter testing before physical deployment. Projects include flight path optimization, sensor coverage modeling, and process scheduling under constraints.
+        </p>
+        <div class="tech-pills">
+          <span class="tech-pill">Python</span>
+          <span class="tech-pill">Genetic Algorithms</span>
+          <span class="tech-pill">Digital Twins</span>
+          <span class="tech-pill">LiDAR Simulation</span>
+          <span class="tech-pill">Manufacturing Modeling</span>
+        </div>
+        <div class="media-grid" style="margin-top:1.5rem;">
+          <div class="media-slot">Replace with screenshot/output image</div>
+          <div class="media-slot">Replace with screenshot/output image</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SOLENOID DRINK DISPENSER -->
+  <div class="project-item" id="proj-dispenser">
+    <div class="project-header" onclick="toggle('proj-dispenser')">
+      <div class="project-meta">
+        <p class="project-tag">IoT · Embedded Systems · 2025</p>
+        <p class="project-title">Solenoid Valve Drink Dispenser</p>
+      </div>
+      <div class="project-chevron">
+        <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+          <path d="M2 4L6 8L10 4" stroke="#999" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </div>
+    </div>
+    <div class="project-body">
+      <div class="project-body-inner">
+        <p class="project-description">
+          A multi-ESP32 IoT system for two-factor liquid dispensing. The device only pours when two independent conditions are simultaneously met: a button press is detected on one ESP32, and an ultrasonic proximity sensor confirms a cup is within range on another. Wireless communication between the microcontrollers uses a logic control layer to combine the signals — preventing accidental dispensing and demonstrating real-world sensor fusion. The system was wired with solenoid valves controlling fluid flow and was designed to be modular and expandable.
+        </p>
+        <div class="tech-pills">
+          <span class="tech-pill">ESP32 (×2)</span>
+          <span class="tech-pill">MicroPython</span>
+          <span class="tech-pill">Solenoid Valves</span>
+          <span class="tech-pill">Ultrasonic Sensors</span>
+          <span class="tech-pill">IoT / Wireless Logic</span>
+        </div>
+        <div class="media-grid" style="margin-top:1.5rem;">
+          <div class="media-slot">Replace with photo of device</div>
+          <div class="media-slot">Replace with demo video</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ELECTRIC GO-KART -->
+  <div class="project-item" id="proj-gokart">
+    <div class="project-header" onclick="toggle('proj-gokart')">
+      <div class="project-meta">
+        <p class="project-tag">Fabrication · Electrical · 2024</p>
+        <p class="project-title">Electric Go-Kart</p>
+      </div>
+      <div class="project-chevron">
+        <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+          <path d="M2 4L6 8L10 4" stroke="#999" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </div>
+    </div>
+    <div class="project-body">
+      <div class="project-body-inner">
+        <p class="project-description">
+          Battery-powered go-kart built entirely by hand. I designed and fabricated an external battery cage from raw materials using a band saw, miter saw, and drill press, then wired the motor, motor controller, and battery pack. Added off-road tires for traction and tuned the throttle response. The kart reaches 16 mph with a 200 lb driver — solid performance for a homebrew electric drivetrain with no commercial kit. The project required hands-on mechanical fabrication, electrical wiring, and iterative tuning under real load conditions.
+        </p>
+        <div class="tech-pills">
+          <span class="tech-pill">DC Motor</span>
+          <span class="tech-pill">Battery Pack</span>
+          <span class="tech-pill">Motor Controller</span>
+          <span class="tech-pill">Fabrication (Band Saw, Miter Saw, Drill Press)</span>
+          <span class="tech-pill">Electrical Wiring</span>
+        </div>
+        <div class="media-grid" style="margin-top:1.5rem;">
+          <div class="media-slot">Replace with build photo</div>
+          <div class="media-slot">Replace with action photo</div>
+          <div class="media-slot">Replace with video</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ELECTRIC MOPED -->
+  <div class="project-item" id="proj-moped">
+    <div class="project-header" onclick="toggle('proj-moped')">
+      <div class="project-meta">
+        <p class="project-tag">Retrofit · Electrical · 2024</p>
+        <p class="project-title">Electric Moped</p>
+      </div>
+      <div class="project-chevron">
+        <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+          <path d="M2 4L6 8L10 4" stroke="#999" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </div>
+    </div>
+    <div class="project-body">
+      <div class="project-body-inner">
+        <p class="project-description">
+          Took a beat-up gas moped and converted it into an electric vehicle from the ground up. Swapped out the stock drivetrain components with a more powerful motor, upgraded motor controller, and a new battery pack. Added a twist throttle and rewired all electrical systems. The retrofitted moped reaches 13 mph with a 200 lb rider. The project reinforced skills in vehicle dynamics, component compatibility, and electrical integration — with the added challenge of making modern components fit legacy hardware.
+        </p>
+        <div class="tech-pills">
+          <span class="tech-pill">Electric Motor</span>
+          <span class="tech-pill">Motor Controller</span>
+          <span class="tech-pill">Battery System</span>
+          <span class="tech-pill">EV Retrofit</span>
+          <span class="tech-pill">Electrical Integration</span>
+        </div>
+        <div class="media-grid" style="margin-top:1.5rem;">
+          <div class="media-slot">Replace with build photo</div>
+          <div class="media-slot">Replace with riding photo/video</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- WIND TURBINE -->
+  <div class="project-item" id="proj-windmill">
+    <div class="project-header" onclick="toggle('proj-windmill')">
+      <div class="project-meta">
+        <p class="project-tag">CAD · 3D Printing · 2024</p>
+        <p class="project-title">3D Printed Wind Turbine</p>
+      </div>
+      <div class="project-chevron">
+        <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+          <path d="M2 4L6 8L10 4" stroke="#999" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </div>
+    </div>
+    <div class="project-body">
+      <div class="project-body-inner">
+        <p class="project-description">
+          Designed, CADed, and 3D printed a wind turbine blade assembly in SolidWorks. The project involved studying aerodynamic blade geometry, iterating on profiles for maximum lift-to-drag ratio, and prototyping multiple blade designs. The final design placed in the <strong>top 3 for blade efficiency</strong> and earned recognition for the <strong>most stable overall structure</strong> in the class competition. This project bridged fluid mechanics theory with hands-on rapid prototyping — design choices were directly validated by real wind-tunnel performance data.
+        </p>
+        <div class="tech-pills">
+          <span class="tech-pill">SolidWorks CAD</span>
+          <span class="tech-pill">3D Printing (FDM)</span>
+          <span class="tech-pill">Aerodynamics</span>
+          <span class="tech-pill">Rapid Prototyping</span>
+        </div>
+        <div class="media-grid" style="margin-top:1.5rem;">
+          <div class="media-slot">Replace with CAD render / photo</div>
+          <div class="media-slot">Replace with test photo</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FLAMETHROWER -->
+  <div class="project-item" id="proj-flame">
+    <div class="project-header" onclick="toggle('proj-flame')">
+      <div class="project-meta">
+        <p class="project-tag">DIY · Fabrication · 2023</p>
+        <p class="project-title">DIY "Not a Flamethrower"</p>
+      </div>
+      <div class="project-chevron">
+        <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+          <path d="M2 4L6 8L10 4" stroke="#999" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </div>
+    </div>
+    <div class="project-body">
+      <div class="project-body-inner">
+        <p class="project-description">
+          Built a handheld DIY torch inspired by Elon Musk's infamous "Not a Flamethrower" — complete with a sparker ignition mechanism and a trigger for controlled combustion. Encased the whole assembly inside a hollowed-out Nerf gun shell (modified with a Dremel) for a clean, theatrical form factor. The project was an exercise in precision fabrication, creative enclosure design, and safely integrating flammable gas components — and honestly, a lot of fun.
+        </p>
+        <div class="tech-pills">
+          <span class="tech-pill">Dremel Fabrication</span>
+          <span class="tech-pill">Ignition System</span>
+          <span class="tech-pill">Enclosure Design</span>
+        </div>
+        <div class="media-grid" style="margin-top:1.5rem;">
+          <div class="media-slot">Replace with photo</div>
+          <div class="media-slot">Replace with demo video (safe, responsible)</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /projects-section -->
+
+<footer>
+  © 2026 Marc Brougher · UC Berkeley
+</footer>
+
+<script>
+  function toggle(id) {
+    const item = document.getElementById(id);
+    const body = item.querySelector('.project-body');
+    const isOpen = item.classList.contains('open');
+
+    // Close all
+    document.querySelectorAll('.project-item').forEach(el => {
+      el.classList.remove('open');
+      el.querySelector('.project-body').style.maxHeight = '0';
+    });
+
+    // Open clicked if it was closed
+    if (!isOpen) {
+      item.classList.add('open');
+      body.style.maxHeight = body.scrollHeight + 'px';
+    }
+  }
+</script>
+
+</body>
+</html>

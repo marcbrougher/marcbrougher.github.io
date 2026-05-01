@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Marc Brougher</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --gold: #C9A84C;
+      --gold-light: #E8C96A;
+      --navy: #0B1F3A;
+      --navy-mid: #152d4f;
+      --cream: #F5F0E8;
+      --text: #1a1a1a;
+      --muted: #666;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--cream);
+      color: var(--text);
+    }
+
+    /* NAV */
+    nav {
+      position: fixed; top: 0; width: 100%; z-index: 100;
+      background: rgba(11,31,58,0.97);
+      backdrop-filter: blur(10px);
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 0 5%;
+      height: 64px;
+      border-bottom: 1px solid rgba(201,168,76,0.3);
+    }
+    .nav-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.3rem;
+      color: var(--gold);
+      font-weight: 700;
+      text-decoration: none;
+    }
+    .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+    .nav-links a {
+      color: rgba(255,255,255,0.85);
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--gold); }
+
+    /* HERO */
+    .hero {
+      min-height: 100vh;
+      background: var(--navy);
+      display: flex; align-items: center;
+      padding: 0 10%;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse at 80% 50%, rgba(201,168,76,0.08) 0%, transparent 70%);
+    }
+    .hero-content { position: relative; z-index: 1; max-width: 700px; }
+    .hero-eyebrow {
+      font-size: 0.85rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1.2rem;
+      font-weight: 500;
+    }
+    .hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(3.5rem, 8vw, 6.5rem);
+      color: white;
+      line-height: 1.0;
+      margin-bottom: 1.5rem;
+      font-weight: 900;
+    }
+    .hero h1 span { color: var(--gold); }
+    .hero-subtitle {
+      font-size: 1.1rem;
+      color: rgba(255,255,255,0.7);
+      line-height: 1.7;
+      margin-bottom: 2.5rem;
+      max-width: 520px;
+    }
+    .hero-tags { display: flex; flex-wrap: wrap; gap: 0.8rem; margin-bottom: 2.5rem; }
+    .hero-tag {
+      padding: 0.4rem 1rem;
+      border: 1px solid rgba(201,168,76,0.4);
+      border-radius: 2px;
+      color: var(--gold-light);
+      font-size: 0.8rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+    .hero-gpa {
+      display: flex; gap: 3rem;
+    }
+    .gpa-block { }
+    .gpa-label { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.12em; color: rgba(255,255,255,0.45); margin-bottom: 0.2rem; }
+    .gpa-value { font-family: 'Playfair Display', serif; font-size: 2rem; color: white; font-weight: 700; }
+    .gpa-value span { font-size: 0.9rem; color: var(--gold); margin-left: 0.2rem; }
+
+    /* SECTION SHARED */
+    section { padding: 6rem 10%; }
+    .section-label {
+      font-size: 0.75rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 0.8rem;
+      font-weight: 500;
+    }
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 4vw, 3rem);
+      color: var(--navy);
+      margin-bottom: 2.5rem;
+      line-height: 1.15;
+    }
+
+    /* ABOUT */
+    .about { background: white; }
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.6fr;
+      gap: 5rem;
+      align-items: start;
+    }
+    .about-photo-wrap {
+      position: relative;
+    }
+    .about-photo {
+      width: 100%;
+      aspect-ratio: 3/4;
+      object-fit: cover;
+      display: block;
+      filter: grayscale(10%);
+    }
+    /* Placeholder if no photo */
+    .photo-placeholder {
+      width: 100%;
+      aspect-ratio: 3/4;
+      background: linear-gradient(135deg, var(--navy) 0%, var(--navy-mid) 100%);
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      color: rgba(255,255,255,0.4);
+      font-size: 0.9rem;
+      text-align: center;
+      padding: 2rem;
+      gap: 1rem;
+    }
+    .photo-placeholder svg { opacity: 0.4; }
+    .about-photo-frame {
+      position: absolute;
+      top: 16px; left: 16px; right: -16px; bottom: -16px;
+      border: 2px solid var(--gold);
+      z-index: 0;
+      pointer-events: none;
+    }
+    .about-photo-wrap > * { position: relative; z-index: 1; }
+    .about-text p {
+      font-size: 1.0rem;
+      line-height: 1.85;
+      color: #333;
+      margin-bottom: 1.4rem;
+    }
+    .about-interests {
+      display: flex; flex-wrap: wrap; gap: 0.6rem;
+      margin-top: 1.8rem;
+    }
+    .interest-chip {
+      padding: 0.35rem 0.9rem;
+      background: var(--cream);
+      border-radius: 2px;
+      font-size: 0.82rem;
+      color: var(--navy);
+      font-weight: 500;
+      border: 1px solid #ddd;
+    }
+
+    /* SKILLS */
+    .skills { background: var(--cream); }
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1.5rem;
+    }
+    .skill-card {
+      background: white;
+      padding: 2rem;
+      border-top: 3px solid var(--gold);
+    }
+    .skill-card h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.1rem;
+      color: var(--navy);
+      margin-bottom: 1.2rem;
+    }
+    .skill-list { list-style: none; }
+    .skill-list li {
+      font-size: 0.9rem;
+      color: #444;
+      padding: 0.4rem 0;
+      border-bottom: 1px solid #f0f0f0;
+      display: flex; align-items: center; gap: 0.6rem;
+    }
+    .skill-list li::before {
+      content: '—';
+      color: var(--gold);
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+    .skill-list li:last-child { border-bottom: none; }
+
+    /* CONNECT */
+    .connect {
+      background: var(--navy);
+      text-align: center;
+    }
+    .connect .section-title { color: white; }
+    .connect p { color: rgba(255,255,255,0.6); max-width: 480px; margin: 0 auto 3rem; font-size: 1rem; line-height: 1.7; }
+    .connect-links { display: flex; justify-content: center; gap: 1.5rem; flex-wrap: wrap; }
+    .connect-btn {
+      display: inline-flex; align-items: center; gap: 0.6rem;
+      padding: 0.85rem 2rem;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.85rem;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      text-decoration: none;
+      transition: all 0.2s;
+      border-radius: 2px;
+    }
+    .btn-gold {
+      background: var(--gold);
+      color: var(--navy);
+      border: 2px solid var(--gold);
+    }
+    .btn-gold:hover { background: var(--gold-light); border-color: var(--gold-light); }
+    .btn-outline {
+      background: transparent;
+      color: white;
+      border: 2px solid rgba(255,255,255,0.3);
+    }
+    .btn-outline:hover { border-color: var(--gold); color: var(--gold); }
+
+    /* FOOTER */
+    footer {
+      background: #060f1c;
+      text-align: center;
+      padding: 1.5rem;
+      font-size: 0.8rem;
+      color: rgba(255,255,255,0.25);
+    }
+
+    /* ANIMATIONS */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .hero-content > * {
+      opacity: 0;
+      animation: fadeUp 0.7s ease forwards;
+    }
+    .hero-eyebrow { animation-delay: 0.1s; }
+    .hero h1 { animation-delay: 0.25s; }
+    .hero-subtitle { animation-delay: 0.4s; }
+    .hero-tags { animation-delay: 0.5s; }
+    .hero-gpa { animation-delay: 0.6s; }
+
+    @media (max-width: 768px) {
+      nav { padding: 0 5%; }
+      .nav-links { gap: 1.2rem; }
+      section { padding: 4rem 6%; }
+      .about-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+      .hero { padding: 0 6%; }
+      .hero-gpa { gap: 2rem; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">MB</a>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="projects.html">Projects</a></li>
+    <li><a href="athletics.html">Athletics</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-content">
+    <p class="hero-eyebrow">UC Berkeley · Class of 2026</p>
+    <h1>Marc<br><span>Brougher</span></h1>
+    <p class="hero-subtitle">
+      Mechanical Engineering Undergraduate &amp; Division I Student-Athlete — building things that move, think, and matter.
+    </p>
+    <div class="hero-tags">
+      <span class="hero-tag">BS Mechanical Engineering</span>
+      <span class="hero-tag">D1 Soccer — Goalkeeper</span>
+      <span class="hero-tag">Cal Bears</span>
+    </div>
+    <div class="hero-gpa">
+      <div class="gpa-block">
+        <p class="gpa-label">Cumulative GPA</p>
+        <p class="gpa-value">3.686<span>/4.0</span></p>
+      </div>
+      <div class="gpa-block">
+        <p class="gpa-label">Technical GPA</p>
+        <p class="gpa-value">3.793<span>/4.0</span></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="about" id="about">
+  <div class="about-grid">
+    <div class="about-photo-wrap">
+      <!-- REPLACE the placeholder below with an <img> tag pointing to your headshot -->
+      <!-- Example: <img src="photos/headshot.jpg" alt="Marc Brougher" class="about-photo"> -->
+      <div class="photo-placeholder">
+        <svg width="64" height="64" viewBox="0 0 64 64" fill="none">
+          <circle cx="32" cy="22" r="14" stroke="white" stroke-width="2"/>
+          <path d="M8 56c0-13.255 10.745-24 24-24s24 10.745 24 24" stroke="white" stroke-width="2"/>
+        </svg>
+        <span>Add your headshot here.<br>See HTML comment above.</span>
+      </div>
+      <div class="about-photo-frame"></div>
+    </div>
+
+    <div class="about-text">
+      <p class="section-label">About Me</p>
+      <h2 class="section-title" style="margin-bottom:1.5rem;">Engineer.<br>Athlete. Builder.</h2>
+
+      <p>
+        I'm a senior at UC Berkeley's College of Engineering pursuing a degree in Mechanical Engineering — with one foot in the lab and the other on the pitch. For the past four years I've trained and competed as a Division I goalkeeper for the Cal Bears while maintaining a 3.686 cumulative GPA and a 3.793 technical GPA, earning Academic All-American honors along the way.
+      </p>
+      <p>
+        Balancing the demands of a top-tier engineering program with the relentless schedule of D1 soccer has sharpened something more valuable than any single skill: a disciplined, outcome-driven work ethic. Early mornings, tight deadlines, and high-stakes performance taught me to show up prepared, adapt fast, and never stop improving.
+      </p>
+      <p>
+        My love for learning runs deeper than coursework. I'm endlessly curious about how things work — from the physics of a transmission to the logic of a machine learning model. That curiosity always leads me back to the same place: <em>building things.</em> Give me a problem, some parts, and enough time and I'll figure it out. Whether it's a PI-controlled T-shirt folder, an IoT drink dispenser, or an electric go-kart, I gravitate toward projects that live at the intersection of mechanical ingenuity and embedded software.
+      </p>
+      <p>
+        Outside the classroom and the training pitch, you'll find me in the mountains, on the water, or somewhere with a gradient. I grew up competing in soccer and skiing at the highest high-school levels, and that love for the outdoors never left.
+      </p>
+
+      <div class="about-interests">
+        <span class="interest-chip">⚽ Soccer</span>
+        <span class="interest-chip">🎿 Skiing</span>
+        <span class="interest-chip">🏄 Surfing</span>
+        <span class="interest-chip">🧗 Rock Climbing</span>
+        <span class="interest-chip">🥾 Hiking</span>
+        <span class="interest-chip">🚵 Biking</span>
+        <span class="interest-chip">🏊 Triathlon Prep</span>
+        <span class="interest-chip">🌊 Outdoors</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section class="skills" id="skills">
+  <p class="section-label">Technical Core</p>
+  <h2 class="section-title">Skills & Tools</h2>
+  <div class="skills-grid">
+
+    <div class="skill-card">
+      <h3>Engineering Software</h3>
+      <ul class="skill-list">
+        <li>SolidWorks (CAD)</li>
+        <li>Engineering Drawings</li>
+        <li>MATLAB</li>
+        <li>Python</li>
+        <li>MicroPython</li>
+      </ul>
+    </div>
+
+    <div class="skill-card">
+      <h3>Hardware & Fabrication</h3>
+      <ul class="skill-list">
+        <li>Embedded Systems (ESP32)</li>
+        <li>Soldering</li>
+        <li>3D Printing</li>
+        <li>Band Saw / Miter Saw</li>
+        <li>Drill Press / Dremel</li>
+      </ul>
+    </div>
+
+    <div class="skill-card">
+      <h3>Software & Data</h3>
+      <ul class="skill-list">
+        <li>Machine Learning (Python)</li>
+        <li>Genetic Algorithms</li>
+        <li>Digital Twin Modeling</li>
+        <li>Data Visualization</li>
+        <li>Spreadsheet Modeling</li>
+      </ul>
+    </div>
+
+    <div class="skill-card">
+      <h3>Languages</h3>
+      <ul class="skill-list">
+        <li>English (Native)</li>
+        <li>French (Fluent)</li>
+        <li>Spanish (Conversational)</li>
+      </ul>
+    </div>
+
+  </div>
+</section>
+
+<!-- CONNECT -->
+<section class="connect" id="connect">
+  <p class="section-label">Get In Touch</p>
+  <h2 class="section-title">Let's Connect</h2>
+  <p>I'm actively seeking engineering internship and full-time opportunities. Feel free to reach out whether you want to talk mechanical design, embedded systems, or just sports.</p>
+  <div class="connect-links">
+    <a href="mailto:marcobrougher@gmail.com" class="connect-btn btn-gold">
+      ✉ Email Me
+    </a>
+    <a href="https://www.linkedin.com/in/marc-brougher-a72954248/" target="_blank" class="connect-btn btn-outline">
+      LinkedIn
+    </a>
+    <a href="resume.pdf" download class="connect-btn btn-outline">
+      ↓ Download Resume
+    </a>
+  </div>
+</section>
+
+<footer>
+  © 2026 Marc Brougher · UC Berkeley
+</footer>
+
+</body>
+</html>
